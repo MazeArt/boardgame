@@ -1,7 +1,4 @@
 
-window.addEventListener('load', init);
-
-
 let score ;
 
 let gameDisplay = document.querySelector('#gameDisplay');
@@ -14,27 +11,15 @@ let Player =function(name,turn,points){
     this.points=points;
 
 }
-const juegos = [
-    'todos toman',
-    'toma doble',
-    'Mímica',
-    'Taritá'
-];
 
-
-const movies = [
-    'Perros de la Calle',
-    'Indiana Jones',
-    'Transformers',
-    'La Delgada Línea Roja',
-    'Guerra de las Galaxias',
-    'Inception ',
-    'Split'
-];
+let numPlayers
+let playerTurn=0
 
 //SETUP PAGE -- 
 // --Add Players
-let player_list=[];
+let player_names=[];
+let gamePlayers=[];
+let turn=0
 
 function addLi(){
     var txtVal = document.getElementById('txtVal').value,
@@ -44,43 +29,46 @@ function addLi(){
         
     liNode.appendChild(txtNode);
     listNode.appendChild(liNode);
-    player_list.push(txtVal);
+    player_names.push(txtVal);
 
 }
 // --Start Game 
-function startGame(){
+function startSession(){
+    //window.location.href = "index.html";
+    goNextPage();
+    var numPlayers=player_names.length;
+    console.log('game has started with %s players' ,numPlayers);
+    for(i=0;i<numPlayers;i++){
+        
+        gamePlayers[i]= new Player(player_names[i],0,0);
+        console.log('a new player was created: %s' ,gamePlayers[i].name  );
+        sessionStorage.setItem("player"+i, player_names[i]);
+        
+    }
+    sessionStorage.setItem("numPlayers", player_names.length);
+    
+   // init();
 
-    player1=player_list[0]
-    window.location.href = "index.html";
-
-
-
+    setTimeout(init(), 5000 ) 
+//window.addEventListener('load', init)
 }
+
+function goNextPage(){ //go to game page
+    window.location.href = "index.html"; // explore onload ??
+} 
 
 
 //GAME PAGE -- 
 //Initialize Game
 function init() {
     console.log('init');
-    //player1= new Player('Fran',0,0)
-    console.log('a new player was created: %s' ,  player1.name);
+    turn=0
+    console.log('a new player was created: %s' ,  'tipo');
 
-    player.innerHTML=player1.name
+   // player.innerHTML=gamePlayers[turn].name //change turn here
     isPlaying = false;
-   // gameDisplay=getGame()
-    
 
-    //load word from array
-    //start matching on word input 
-   // wordInput.addEventListener('keyup', startWord);
-   // wordInput.addEventListener('keyup', checkKeyPressed, false);
-
-    // call countdown every second
-    //setInterval(countdown, 1000); //Timer
-    //check game status
-    //setInterval(checkStatus, 50);
 }
-
 
 function getGame(){
     juego=getRandomFromList(juegos)
@@ -89,10 +77,22 @@ function getGame(){
         juego=getRandomFromList(juegos);
         console.log('salió repetido! buscando otro....');
     }
+    console.log('its player %s turn' , playerTurn);
+    //players in the Session
+    numPlayers = sessionStorage.getItem("numPlayers");
+    //show player name in index
+    player.innerHTML = sessionStorage.getItem("player"+playerTurn);
+    
+    //logic to decide next player turn (cycles through numPlayers)
+    if(playerTurn<(numPlayers-1)){
+        playerTurn++;
+    } else {
+        playerTurn=0;
+    }
+    
+  
    
-   
-   
-    gameDisplay.innerHTML=juego
+    gameDisplay.innerHTML=juego;
     //make function to prevent repeating random
     lastGame=juego
 
@@ -109,3 +109,43 @@ function getRandomFromList(list){
 
 }
 
+//--- Lista de Juegos y Pelis
+
+const juegos = [
+    'todos toman',
+    'toma doble',
+    'Mímica',
+    'Jugador Toma',
+    'Regala 1',
+    'Regla 2',
+    'Penitencia',
+    'Casa Tira Mata',
+    'Nunca Nunca',
+    'Tarita',
+    'Cultura Chupistica',
+    'Shot',
+    'Ha Llegado Carta',
+    'Escaleras',
+    'Stripper',
+    'Verdad o Reto',
+    'Pregunta Indiscreta',
+    'Adivina ',
+    'El Dedo',
+    'Chancho Inflado',
+    'Historia',
+    'Palabras',
+    '1vs1',
+    'Cachipun al seco'
+
+];
+
+
+const movies = [
+    'Perros de la Calle',
+    'Indiana Jones',
+    'Transformers',
+    'La Delgada Línea Roja',
+    'Guerra de las Galaxias',
+    'Inception ',
+    'Split'
+];
