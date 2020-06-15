@@ -15,47 +15,19 @@ let Player =function(name,turn,points){
 let numPlayers
 let playerTurn=0
 
+
+
+
+
 //SETUP PAGE -- 
 // --Add Players
-let player_names=[];
-let gamePlayers=[];
-let turn=0
 
-function addLi(){
-    var txtVal = document.getElementById('txtVal').value,
-        listNode = document.getElementById('list'),
-        liNode = document.createElement("LI"),
-        txtNode = document.createTextNode(txtVal);
-        
-    liNode.appendChild(txtNode);
-    listNode.appendChild(liNode);
-    player_names.push(txtVal);
-
-}
-// --Start Game 
-function startSession(){
-    //window.location.href = "index.html";
-    goNextPage();
-    var numPlayers=player_names.length;
-    console.log('game has started with %s players' ,numPlayers);
-    for(i=0;i<numPlayers;i++){
-        
-        gamePlayers[i]= new Player(player_names[i],0,0);
-        console.log('a new player was created: %s' ,gamePlayers[i].name  );
-        sessionStorage.setItem("player"+i, player_names[i]);
-        
-    }
-    sessionStorage.setItem("numPlayers", player_names.length);
-    
    // init();
 
-    setTimeout(init(), 5000 ) 
+   // setTimeout(init(), 5000 ) 
 //window.addEventListener('load', init)
-}
 
-function goNextPage(){ //go to game page
-    window.location.href = "index.html"; // explore onload ??
-} 
+
 
 
 //GAME PAGE -- 

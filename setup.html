@@ -1,27 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tablero de la Perdición</title>
 </head>
+
 <body>
     <h1>Bienvenido al Tablero de la Perdición</h1>
     <h2>un juego para los que buscan dejar este mundo atrás </h2>
     <h3>Quienes son los valientes hoy? </h3>
 
-    <input type='text' id='txtVal' placeholder='Nombre'> 
-   <button onclick='addLi()'>Agregar</button>
-   
-   
+    <input type='text' id='txtVal' placeholder='Nombre'>
+    <button id='addplayerBtn' onclick='addLi()'>Agregar</button>
+
+
     <ul id='list'>
         <!-- Added players go here-->
     </ul>
     <button onclick='startSession()'>Estamos Listos! </button>
 
-    <script src="tablero.js"></script>
+    <script>
+        let player_names = [];
+        let gamePlayers = [];
+        sessionStorage.clear();
+        
+
+        // Clear input after enter or click
+        var input = document.getElementById("txtVal");
+
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("addplayerBtn").click();
+                input.value = ''
+            }
+        });
+        function addLi() {
+            var txtVal = document.getElementById('txtVal').value,
+                listNode = document.getElementById('list'),
+                liNode = document.createElement("LI"),
+                txtNode = document.createTextNode(txtVal);
+
+            liNode.appendChild(txtNode);
+            listNode.appendChild(liNode);
+            player_names.push(txtVal);
+            input.value = '';
+
+        }
+
+        // --Save Session Players Parameters for next_page 
+        function startSession() {
+            
+            //window.location.href = "index.html";
+            var numPlayers = player_names.length;
+            console.log('game has started with %s players', numPlayers);
+            
+            //sotre player names
+            for (i = 0; i < numPlayers; i++) {
+
+                console.log('a new player was created: %s', player_names[i]);
+                sessionStorage.setItem("player" + i, player_names[i]);
+            }
+           //store number of players
+            sessionStorage.setItem("numPlayers", player_names.length);
+            
+            //go to next page
+            window.location.href = "index.html"; // explore onload ??
+
+        }
+        
+    </script>
 
 
 </body>
+
 </html>
