@@ -10,15 +10,20 @@
 
 <body>
   
-    <button onclick='getGame()'>Rolar !</button></p>
-    A <span id='player' style="color:black;font-weight:bold">Jugador </span> le salió : 
-    <span id='gameDisplay'>Rolea el Dado </span>
-    <p id='message'>Si pierde toma; </p>
+  <button onclick='getGame()'>Rolar el Dado</button></p>
+  A <span id='player' style="color:black;font-weight:bold">Jugador </span> le salió : 
+  <span id='gameDisplay'>Rolea el Dado </span>
+  <p id='message'>Si pierde toma; </p>
 
-    <div class="card card-body bg-secondary text-white">
-        <h5>Instrucciones</h5>
-        <p>No Morir</p>
-      </div>
+
+  <div id="mimica_" style="display: none">
+      <h5>Ha salido un juego de mímica !</h5>
+      <p>Todos deben cerrar los ojos y el host presionará le tecla "m" para mostrar la película, listos? </p>
+      <span id='movie'></span>
+      <button onclick="mimica()">Otra Peli</button>
+
+  </div>
+
 
     <script src="tablero.js"></script>
 </body>
