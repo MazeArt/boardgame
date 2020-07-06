@@ -45,6 +45,7 @@ function init() {
 }
 
 function getGame(){
+
     juego=getRandomFromList(juegos)
     console.log('the game  is %s, last game was  %s' ,  juego,lastGame);
     currentGame=juego
@@ -96,19 +97,49 @@ function getRandomFromList(list){
 }
 
 function  mimica(){
-
+    
     if(currentGame=='Mímica'){
         
         if (mimica_div.style.display === "none") {
             mimica_div.style.display = "block";
         }    
     }
-    movie=getRandomFromList(movies)
-   
-    
+    movie=getRandomFromList(movies)     
+}
+
+//roullette
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function wheelEffect(){
+    currentGame='';
+    mimica_div.style.display = "none"
+    var t=20;
+    var interval=Math.random()*(-1+Math.round(Math.random()))
+    var duration=300+interval*(100)
+    var lastItem
+    console.log('this is t: ',t); 
+    while(t<duration){
+        await sleep(t)
+        
+        console.log('this is t: ',t,duration)
+        t=t+20
+        juego=getRandomFromList(juegos)
+        while(juego==lastItem){
+            juego=getRandomFromList(juegos)
+        }
+        lastItem=juego
+
+        gameDisplay.innerHTML=juego;
+        ;
+    }
+    getGame();
     
 }
 
+
+//key press listen
 document.body.addEventListener('keydown', function(e) {
    console.log('key pressed, ',currentGame)
     if(currentGame=='Mímica'){
