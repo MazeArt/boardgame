@@ -44,6 +44,29 @@ function init() {
 
 }
 
+function rollDice(){
+    getPlayerTurn();
+    wheelEffect();
+}
+
+
+function getPlayerTurn(){
+    console.log('its player %s turn' , playerTurn);
+    //players in the Session
+    numPlayers = sessionStorage.getItem("numPlayers");
+    console.log("players::",sessionStorage.getItem("numPlayers"))
+    //show player name in index
+    player.innerHTML = sessionStorage.getItem("player"+playerTurn);
+    console.log("player::",sessionStorage.getItem("player"+playerTurn))
+    //logic to decide next player turn (cycles through numPlayers)
+    if(playerTurn<(numPlayers-1)){
+        playerTurn++;
+    } else {
+        playerTurn=0;
+    }
+
+}
+
 function getGame(){
 
     juego=getRandomFromList(juegos)
@@ -53,18 +76,6 @@ function getGame(){
         juego=getRandomFromList(juegos);
         console.log('salió repetido! buscando otro....');
         currentGame=juego
-    }
-    console.log('its player %s turn' , playerTurn);
-    //players in the Session
-    numPlayers = sessionStorage.getItem("numPlayers");
-    //show player name in index
-    player.innerHTML = sessionStorage.getItem("player"+playerTurn);
-    
-    //logic to decide next player turn (cycles through numPlayers)
-    if(playerTurn<(numPlayers-1)){
-        playerTurn++;
-    } else {
-        playerTurn=0;
     }
    
     gameDisplay.innerHTML=juego;
@@ -88,7 +99,6 @@ function getGame(){
 
 }
 
-
 function getRandomFromList(list){
     var listlen=list.length;
     var random = Math.floor((Math.random()*list.length));
@@ -96,7 +106,7 @@ function getRandomFromList(list){
     return list[random];
 }
 
-function  mimica(){
+function mimica(){
     
     if(currentGame=='Mímica'){
         
@@ -123,7 +133,7 @@ async function wheelEffect(){
     while(t<duration){
         await sleep(t)
         
-        console.log('this is t: ',t,duration)
+     //   console.log('this is t: ',t,duration)
         t=t+20
         juego=getRandomFromList(juegos)
         while(juego==lastItem){
@@ -295,7 +305,6 @@ const movies = [
 'Home Alone',
 'Bad Santa',
 'Trading Places',
-'Scrooged',
-'',
-
+'Scrooged'
 ];
+
