@@ -23,9 +23,45 @@
       <p>Todos deben cerrar los ojos y el host presionará le tecla "m" para mostrar la película, listos? </p>
       <span id='movie'></span>
       <button onclick='mimica()'>Otra Peli</button>
-
+  </div>
+  
+  <div id="twoTruths_" style="display: none">
+    <h5>Ha salido Dos Verdades y una Mentira  !</h5>
+    <p>El jugador debe hacer una introspección personal, y contar dos verdades de sí mismo  y una mentira </p>
+    <p>El resto debe llegar a un acuerdo sobre qué es real y qué es ficción </p>
   </div>
 
+  <div id="palabras_" style="display: none">
+    <h5>Ha salido un juego de Concatenar Palabras</h5>
+      <p>Un jugador debe decir una palabra cualquiera, el siguente jugador (elegido a al azar) 
+    debe decir otra palabra cuya primera sílaba sea la misma que la última sílaba de la palabra anterior...Ejemplo : "Piso" ..."Sopa", fácil! <br>
+      Atentos? </p>
+      <p>Todos deben cerrar los ojos y el host presionará le tecla "m" para mostrar la película, listos? </p>
+    Va : <span id='random_player' style="font-size: 150%"></span>
+    <button onclick='nextPlayerTimer()'>Click me !</button>
+    <span id='countdown'>Comenzar</span>
+  </div>
+
+  <div id="quiensoy_" style="display: none">
+    <h5>Ha salido un juego de "Quien Soy" !</h5>
+    <p>Todos menos el jugador verán un personaje (real o ficiticio). El jugador deberá hacer preguntas "SI/NO" hasta adivinar el personaje. <br>
+         </p>
+    <p>El Jugador debe cerrar los ojos y el host presionará le tecla "m" para mostrar el personaje, listos? </p>
+    <span id='personaje' style="font-size: 250%"></span>
+    <button onclick='quiensoy()'>Otro Personaje</button>
+  </div>
+
+    <div id="trivia_" style="display: none">
+      <h5>Ha salido un juego de "Trivia" !</h5>
+      <p>Clásico juego de cultura popular... <br>
+           </p>
+      <p>El Jugador contestará la pregunta y el host presionará le tecla "m" para mostrar la respuesta, listos? </p>
+      <span id='pregunta'></span><br>
+      Respuesta:
+      <span id='respuesta'></span>
+      <button onclick='trivia()'>Otra Pregunta</button>
+     
+    </div>  
 
     <script src="tablero.js"></script>
 </body>
