@@ -249,7 +249,7 @@ async function wheelEffect(){
     mimica_div.style.display = "none"
     var t=20;
     var interval=Math.random()*(-1+Math.round(Math.random()))
-    var duration=20+interval*(100) //300 
+    var duration=300+interval*(100) //300 
     var lastItem
     console.log('this is t: ',t); 
     while(t<duration){
