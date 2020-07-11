@@ -17,6 +17,7 @@ const twotruths_div = document.getElementById("twoTruths_");
 const palabras_div =  document.getElementById("palabras_");
 const quiensoy_div =  document.getElementById("quiensoy_");
 const trivia_div =  document.getElementById("trivia_");
+const historia_div = document.getElementById("historia_");
 
 
 const numPlayers = sessionStorage.getItem("numPlayers");
@@ -45,6 +46,8 @@ function hide_divs(){
     twotruths_div.style.display = "none"
     trivia_div.style.display = "none"
     quiensoy_div.style.display = "none"
+    historia_div.style.display = "none"  
+    
 }
 
 
@@ -141,6 +144,13 @@ function getGame(){
             twotruths();
         break;  
         
+        case 'Historia...':
+            if (quiensoy_div.style.display === "none") {
+                quiensoy_div.style.display = "block";
+            }    
+           
+        break;  
+
         default:
           // code block
       }
@@ -268,9 +278,7 @@ async function wheelEffect(){
         ;
     }
     getGame();
-    
 }
-
 
 //KEY Press listen
 document.body.addEventListener('keydown', function(e) {
@@ -314,7 +322,8 @@ const juegos = [
     'Mímica',
     'Palabras Concatenadas',
     'Dos Verdades y una Mentira',
-    'Quien soy?'
+    'Quien soy?',
+    'Historia...'
 ];
 
 
