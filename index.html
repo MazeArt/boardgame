@@ -36,9 +36,27 @@
       <p>Un jugador debe decir una palabra cualquiera, el siguente jugador (elegido a al azar) 
     debe decir otra palabra cuya primera sílaba sea la misma que la última sílaba de la palabra anterior...Ejemplo : "Piso" ..."Sopa", fácil! <br>
       Atentos? </p>
-      
+  </div>
+  
+  <div id="historia_" style="display: none">
+    <h5>Ha salido Contar una historia...</h5>
+    <p>Los jugadores deben repetir la historia agregando una frase o palabra.. <br>
+    </p>
+    <p>El Jugador debe repetir la historia completa en el orden correcto </p>
+  </div>
+
+  <div id="cultura_" style="display: none">
+    <h5>Ha salido Cultura Chupística !</h5>
+    <p>Los jugadores deben nombrar elementos del grupo que se mostrará a continuación <br>
+    </p>
+    <p>No se pueden repetir elementos... listos ?? la cultura chupística pide....</p>
+    <button onclick='cultura()'>Otra Pregunta</button><br>
+    <span id='cultura_chupi_q' style="font-size: 150% ; color:blue"></span>
+  </div>
+  
+  <div id="randomPlayerTurn_" style="display: none">
     Va : <span id='random_player' style="font-size: 150%"></span>
-    <button onclick='nextPlayerTimer()'>Click me !</button>
+    <button onclick='historia()'>Click me !</button>
     <span id='countdown'>Comenzar</span>
   </div>
 
@@ -51,21 +69,20 @@
     <button onclick='quiensoy()'>Otro Personaje</button>
   </div>
 
-  <div id="historia_" style="display: none">
-    <h5>Ha salido Contar una historia...</h5>
-    <p>Los jugadores deben repetir la historia agregando una frase o palabra.. <br>
-         </p>
-    <p>El Jugador que no repetir la historia completa en el orden correcto pierde</p>
- 
-  </div>
-
-    <div id="trivia_" style="display: none">
+  
+  <div id="trivia_" style="display: none">
       <h5>Ha salido un juego de "Trivia" !</h5>
       <p>Clásico juego de cultura popular... <br>
            </p>
       <p>El Jugador contestará la pregunta y el host presionará le tecla "m" para mostrar la respuesta, listos? </p>
       <span id='pregunta'></span><br>
-      Respuesta:
+      Respuestas:
+      <ul>
+        <li id='triv_opt1'>Coffee</li>
+        <li id='triv_opt2'>Tea</li>
+        <li id='triv_opt3'>Milk</li>
+        <li id='triv_opt4'>Das Beer</li>
+      </ul>
       <span id='respuesta'></span>
       <button onclick='trivia()'>Otra Pregunta</button>
      
