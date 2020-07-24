@@ -32,7 +32,7 @@ lastRolledGames = []
 let PrevRolledGame_check = false
 
 let timer
-let roulleteTime = 200 //default 300, 100 for speed debug
+let roulleteTime = 250 //default 300, 100 for speed debug
 
 let movie //this is the selected random movie
 let personaje
@@ -316,7 +316,7 @@ function cultura() {
         return n[n.length - 1];
 
     }
-    letras = [" A", " B", " C", " D", " E"," F", " G", "H", " I", " J", " K", " L"];
+    
     lastWordy = lastword(cultura_chupistica[random])
     console.log(lastWordy)
     if (lastWordy == 'letra') {
@@ -999,6 +999,10 @@ const personajes = ['Zheng He',
     'Abraham Lincoln',
     'Abraham'
 ]
+
+const letras = [" A", " B", " C", " D", " E"," F", " G", "H", " I", " J", " K",
+ " L"," M"," N"," O"," P"," Q"," R"," S"," T"," U"," V"];
+
 
 
 //https://docs.google.com/spreadsheets/d/1XpR1PJqoY-1BXka01CqlAYVR-5lFd4iHu1mrDqRU9vw/edit?userstoinvite=melissa.salinas.m%40gmail.com&ts=5ee578c3#gid=1187409450
