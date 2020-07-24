@@ -338,7 +338,7 @@ function nextPlayerSelector(){
             break;
 
         case 'Historia...':
-            nextPlayerTimer(15," test");
+            nextPlayerTimer(15," perdió?");
             console.log("parsearon 15 seg")
 
             break;
