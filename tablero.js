@@ -3,7 +3,8 @@ let score;
 
 let gameDisplay = document.querySelector('#gameDisplay');
 let player = document.querySelector('#player');
-let message = document.querySelector('#message')
+let message = document.querySelector('#message');
+let culturaLetter=document.querySelector('#cultura_chupi_q_letra');
 let lastGame
 let Player = function (name, turn, points) {
     this.name = name;
@@ -31,7 +32,7 @@ lastRolledGames = []
 let PrevRolledGame_check = false
 
 let timer
-let roulleteTime = 100 //default 300, 100 for speed debug
+let roulleteTime = 200 //default 300, 100 for speed debug
 
 let movie //this is the selected random movie
 let personaje
@@ -59,6 +60,9 @@ function hide_divs() {
     historia_div.style.display = "none"
     randomPlayerTurn_div.style.display = "none"
     cultura_div.style.display = "none"
+    //resets countdown to show Comenzar always
+    document.getElementById("countdown").innerHTML = "Comenzar";
+
 
 }
 
@@ -97,15 +101,12 @@ function rollDice() {
 }
 
 
-
-
 function getPlayerTurn() {
     console.log('its player %s turn', playerTurn);
     //players in the Session
     //numPlayers = sessionStorage.getItem("numPlayers");
     console.log("players::", sessionStorage.getItem("numPlayers"))
     //show player name in index
-    player.innerHTML = sessionStorage.getItem("player" + playerTurn);
     console.log("player::", sessionStorage.getItem("player" + playerTurn))
     //logic to decide next player turn (cycles through numPlayers)
     if (playerTurn < (numPlayers - 1)) {
@@ -113,6 +114,7 @@ function getPlayerTurn() {
     } else {
         playerTurn = 0;
     }
+    player.innerHTML = sessionStorage.getItem("player" + playerTurn);
 
 }
 
@@ -269,8 +271,13 @@ function palabrasConc() {
             randomPlayerTurn_div.style.display = "block";
         }
     }
-    randomPlayer = getRandomFromList(playerList)
-    document.getElementById('random_player').innerHTML = randomPlayer
+    ///TODO make a random_playDeduper
+ //   randomPlayer = getRandomFromList(playerList);
+  //  lastPlayers
+   // document.getElementById('random_player').innerHTML = randomPlayer
+  
+   //aseguramos que el primer random_player sea el player que le tocó el main_game
+   document.getElementById('random_player').innerHTML=sessionStorage.getItem("player" + playerTurn)
 }
 
 function historia() {
@@ -282,10 +289,11 @@ function historia() {
             randomPlayerTurn_div.style.display = "block";
         }
     }
-    //agregar función genérica para evitar dos veces seguidos
-    // randomWODup() ?
-    randomPlayer = getRandomFromList(playerList)
-    document.getElementById('random_player').innerHTML = randomPlayer
+  
+
+   //aseguramos que el primer random_player sea el player que le tocó el main_game 
+    document.getElementById('random_player').innerHTML=sessionStorage.getItem("player" + playerTurn)
+
 }
 
 function cultura() {
@@ -299,26 +307,71 @@ function cultura() {
     }
     //agregar función genérica para evitar dos veces seguidos
     // randomWODup() ?
-    var random=Math.floor(Math.random() * cultura_chupistica.length)
+    var random = Math.floor(Math.random() * cultura_chupistica.length)
     randomPlayer = getRandomFromList(playerList)
     document.getElementById('random_player').innerHTML = randomPlayer
     document.getElementById('cultura_chupi_q').innerHTML = cultura_chupistica[random]
+    function lastword(string) {
+        var n = string.split(" ");
+        return n[n.length - 1];
+
+    }
+    letras = [" A", " B", " C", " D", " E"," F", " G", "H", " I", " J", " K", " L"];
+    lastWordy = lastword(cultura_chupistica[random])
+    console.log(lastWordy)
+    if (lastWordy == 'letra') {
+        random = Math.floor(Math.random() * letras.length)
+        //wheelEffect_items pasa la lista y el objeto innerHTML a modificar
+        wheelEffect_Items(letras, culturaLetter)
+
+    }
+    document.getElementById('random_player').innerHTML=sessionStorage.getItem("player" + playerTurn)
+
 }
 
+function nextPlayerSelector(){
+
+    switch (currentGame) {
+
+        case 'Palabras Concatenadas':
+            nextPlayerTimer(3,"Perdió!!");
+            break;
+
+        case 'Historia...':
+            nextPlayerTimer(15," test");
+            console.log("parsearon 15 seg")
+
+            break;
+
+        case 'Cultura Chupistica':
+            randomPlayer = getRandomFromList(playerList)
+            document.getElementById('random_player').innerHTML = randomPlayer
+            document.getElementById("countdown").innerHTML = "Recuerden que no se puede repetir!";
+            break;
+
+        default:
+        // code block
+    }
+
+
+}
 
 let dTimer
-function nextPlayerTimer() {
+function nextPlayerTimer(timer,endMessage) {
+
+   
+
     randomPlayer = getRandomFromList(playerList)
     document.getElementById('random_player').innerHTML = randomPlayer
 
     clearInterval(dTimer);
-    var timeleft = 3;
+    var timeleft = timer;
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
 
     dTimer = setInterval(function () {
         if (timeleft <= 0) {
             clearInterval(dTimer);
-            document.getElementById("countdown").innerHTML = "Perdió !!";
+            document.getElementById("countdown").innerHTML = endMessage;
         } else {
             document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
         }
@@ -359,6 +412,31 @@ async function wheelEffect() {
         ;
     }
     getGame();
+}
+
+async function wheelEffect_Items(list,papa) {
+  
+    var t = 20;
+    var interval = Math.random() * (-1 + Math.round(Math.random()))
+    var duration = 350 + interval * (100) //300 
+    var lastItem
+    console.log('this is t: ', t);
+    while (t < duration) {
+        await sleep(t)
+
+        //   console.log('this is t: ',t,duration)
+        t = t + 20
+        item = getRandomFromList(list)
+        while (item == lastItem) {
+            item = getRandomFromList(list)
+        }
+        lastItem = item
+        //debugging
+        //  juego='Quien soy?'
+        papa.innerHTML = item;
+        
+    }
+   
 }
 
 //KEY Press listen
@@ -929,7 +1007,7 @@ const trivia_questions = [
     { q_num: 1, q: 'Hg is the chemical symbol of which element?', a0: ' Mercury', a1: 'Helium', a2: 'Magnesium', a3: 'Silver' },
     { q_num: 2, q: 'About how many taste buds does the average human tongue have? ', a0: '10.000', a1: '1.000', a2: '100.000', a3: '1.000.000' },
     { q_num: 3, q: 'How much does the Chewbacca costume weigh? ', a0: '4 kg', a1: '8kg', a2: '2 kg', a3: '16 kg' },
-    { q_num: 4, q: 'Which of these bird were worshipped as gods by the Mayans?', a0: 'Turkey', a1: 'Chickes', a2: 'Flamenco', a3: 'Guacamayo' },
+    { q_num: 4, q: 'Which of these birds was worshipped as gods by the Mayans?', a0: 'Turkey', a1: 'Chickes', a2: 'Flamenco', a3: 'Guacamayo' },
     { q_num: 5, q: 'What colors are the Norwegian flag? ', a0: ' Red, white, and blue', a1: 'White and blue', a2: 'Yellow, blue ', a3: 'Red and White' },
     { q_num: 6, q: 'Napoleon Was Once Attacked By a Horde of ...', a0: 'Bunnies', a1: 'Bees', a2: 'Lions', a3: 'Pigs' },
     { q_num: 7, q: 'Ludwig Van Beethoven was born in 1770 in which city? ', a0: ' Berlin', a1: 'Hamburg', a2: 'Düsseldorf', a3: 'Mannheim' },
@@ -949,52 +1027,59 @@ const trivia_questions = [
 
 const cultura_chupistica = [
     'Partes del cuerpo que hay solo 1.',
-    'Partes del cuerpo que crecen.',
-    'Nombres de personas en que no sean en español ni inglés  (árabe, en alemán, japonés, etc...)',
-    'Nombre de los dientes.',
-    'Colores naturales de los ojos.',
-    'Nombre de los dedos de las manos.',
-    'Nombres de los personajes de los simpson.',
-    'Nombres que terminen con "s", como "Andrés"',
-    'Nombres de los personajes del chavo del 8.',
-    'Nombres de marcas de auto.',
-    'Nombres de los huesos del cuerpo humano.',
-    'Nombre de ciudades que tengan playas.',
-    'Nombres de mujeres que no terminen con A.',
-    'Cantantes o músicos famosos que murieron jóvenes',
-    'Razas de perros.',
-    'Señaleticas de transito.',
-    'Nombre de las ciudades del mundo que empiecen con O.',
-    'Nombres de tragos.',
-    'Nombre de deportes q se jueguen con una pelota.',
-    'Nombre de comidas fritas.',
-    'Nombres que empiecen con A.',
-    'Palabras que no tengan la A como por ejemplo Libro, Pulmon etc.',
-    'Nombres de animales acuáticos.',
-    'Nombre de deportes q se jueguen sin una pelota.',
-    'Nombres de comidas que lleven papas ejemplo pastel de papas.',
-    'Animales propios de América Latina',
-    'Palabras agudas terminadas en N tales como CAMIÓN.',
-    'Nombres personas antiguos como por ejemplo: Ermenegilda.',
-    'Películas de disney antes del 2000',
-    'Cosas que no pueden faltar en la cama como por ejemplo: colchón.',
-    'Nombre de Competidores de Uber en el mundo por ejemplo: DiDi',
-    'Nombres de productos de Uber como por ejemplo UberX',
-    'Nombres de hombre que contengan “s” ej.: Andrés.',
-    'Nombres de frutas.',
-    'Cuerpos Celestes como astros o plantas',
-    'Marcas de cervezas.',
-    'Nombre solo instrumentos de cuerda como por ejemplo violín.',
-    'Nombre marcas de automóviles como por ejemplo Suzuki.',
-    'Marcas de celulares.',
-    'Nombres de animales con alas que no vuelan',
-    'Jugador propone el tema :',
-    'Nombre los dibujos animados ochenteros como por ej.: he-man.',
-    'nombre marcas de cigarrillos.',
-    'Nombre signos zodiacales.',
-    'Nombres bíblicos como por ej.: Noé',
-    'Nombre de las ciudades  o paises del mundo que empiecen con L.',
-    'Nombre de Monedas del mundo',
-    'Nombre de Aerolineas',
-    'Capitales Latinoamericanas',
+'Organos del Cuerpo que están pareados',
+'Nombres de personas en que no sean en español ni inglés  (árabe, en alemán, japonés, etc...)',
+'Nombre de los dientes.',
+'Sistemas del Cuerpo Humano ej: nervioso',
+'Nombre de los dedos de las manos.',
+'Nombres de los personajes de los simpson.',
+'Nombres que terminen con "s", como "Andrés"',
+'Nombres de los personajes del chavo del 8.',
+'Nombres de marcas de auto.',
+'Nombres de los huesos del cuerpo humano.',
+'Nombre de ciudades que tengan playas',
+'Nombres de mujeres que no terminen con A.',
+'Cantantes o músicos famosos que murieron jóvenes',
+'Razas de perros.',
+'Señaleticas de transito.',
+'Nombre de las ciudades del mundo que empiecen la letra',
+'Nombres de tragos.',
+'Nombre de deportes q se jueguen con una pelota.',
+'Nombre de comidas fritas.',
+'Apellidos que empiecen con la letra',
+'Palabras que no tengan la A como por ejemplo Libro, Pulmon etc.',
+'Nombres de animales acuáticos.',
+'Nombre de deportes q se jueguen sin una pelota.',
+'Nombres de comidas que lleven papas ejemplo pastel de papas.',
+'Animales propios de América Latina',
+'Palabras agudas terminadas en N tales como CAMIÓN.',
+'Nombres personas antiguos como por ejemplo: Ermenegilda.',
+'Películas de disney antes del 2000',
+'Cosas que no pueden faltar en la cama como por ejemplo: colchón.',
+'Nombre de Competidores de Uber en el mundo por ejemplo: DiDi',
+'Nombres de productos de Uber como por ejemplo UberX',
+'Nombres de hombre que contengan “s” ej.: Andrés.',
+'Nombres de frutas.',
+'Cuerpos Celestes como astros o plantas',
+'Marcas de cervezas.',
+'Nombre solo instrumentos de cuerda como por ejemplo violín.',
+'Nombre marcas de automóviles como por ejemplo Suzuki.',
+'Marcas de celulares.',
+'Nombres de animales con alas que no vuelan',
+'Jugador propone el tema :',
+'Nombre los dibujos animados ochenteros como por ej.: he-man.',
+'nombre marcas de cigarrillos.',
+'Nombre signos zodiacales.',
+'Nombres bíblicos como por ej.: Noé',
+'Nombre de las ciudades  o paises del mundo que empiecen la letra',
+'Nombre de Monedas del mundo',
+'Nombre de Aerolineas',
+'Capitales Latinoamericanas',
+'Nombre de gentilicios latinoamericanos como por ejemplo Argentino',
+'Marcas y su país de orígen como Sony: Japón',
+'Animales que comiencen con la letra',
+'Nombres de Mujer que empiecen con la letra',
+'Nombres de mascotas que empiecen con la letra',
+'Nombre de Paises que comiencen con la letra',
+'Nombre de personajes ficticios que comiencen con la letra',
 ]

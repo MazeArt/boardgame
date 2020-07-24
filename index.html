@@ -51,12 +51,12 @@
     </p>
     <p>No se pueden repetir elementos... listos ?? la cultura chupística pide....</p>
     <button onclick='cultura()'>Otra Pregunta</button><br>
-    <span id='cultura_chupi_q' style="font-size: 150% ; color:blue"></span>
+    <span id='cultura_chupi_q' style="font-size: 150% ; color:blue"></span><span id='cultura_chupi_q_letra' style="font-size: 170% ; color:red"></span>
   </div>
   
   <div id="randomPlayerTurn_" style="display: none">
     Va : <span id='random_player' style="font-size: 150%"></span>
-    <button onclick='historia()'>Click me !</button>
+    <button onclick='nextPlayerSelector()'>Click me !</button>
     <span id='countdown'>Comenzar</span>
   </div>
 
@@ -77,12 +77,12 @@
       <p>El Jugador contestará la pregunta y el host presionará le tecla "m" para mostrar la respuesta, listos? </p>
       <span id='pregunta'></span><br>
       Respuestas:
-      <ul>
+      <ol type="a">
         <li id='triv_opt1'>Coffee</li>
         <li id='triv_opt2'>Tea</li>
         <li id='triv_opt3'>Milk</li>
         <li id='triv_opt4'>Das Beer</li>
-      </ul>
+      </ol>
       <span id='respuesta'></span>
       <button onclick='trivia()'>Otra Pregunta</button>
      
