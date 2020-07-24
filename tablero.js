@@ -358,9 +358,7 @@ function nextPlayerSelector(){
 
 let dTimer
 function nextPlayerTimer(timer,endMessage) {
-
-   
-
+//TODO cuando el timer esta en 15 y se cambia el juego no se resetea... siguente juego muestra segundos restantes
     randomPlayer = getRandomFromList(playerList)
     document.getElementById('random_player').innerHTML = randomPlayer
 
